@@ -1,33 +1,24 @@
 import Head from 'next/head';
-import { connectToDatabase } from '../util/mongodb'
-import { signIn, signOut, useSession } from 'next-auth/client';
+import Link from 'next/link';
+import { connectToDatabase } from '../util/mongodb';
 
-const Home = () => {
-  const [session, loading] = useSession();
-
+const Home = ({ isConnected }) => {
   return (
     <>
       <Head>
         <title>AccountaPal</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {!session && (
-        <>
-          Not signed in <br />
-          <button onClick={signIn}>Sign in</button>
-        </>
-      )}
-      {session && (
-        <>
-          Signed in as {session.user.email} <br />
-          <button onClick={signOut}>Sign out</button>
-        </>
+      {isConnected ? (
+        <Link href="/login">Login</Link>
+      ) : (
+        <h1>Database not connected.</h1>
       )}
     </>
   );
-}
+};
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (context) => {
   const { client } = await connectToDatabase();
   const isConnected = await client.isConnected(); // Returns true or false
   return {
