@@ -1,13 +1,8 @@
 import Head from 'next/head';
-import { connectToDatabase } from '../util/mongodb'
 import { signIn, signOut, useSession } from 'next-auth/client';
 
-const Login = ({ isConnected  }) => {
+const Login = () => {
   const [session, loading] = useSession();
-
-  if (!isConnected) {
-    return <h1>MongoDB not connected!</h1>;
-  }
   
   return (
     <>
@@ -29,14 +24,6 @@ const Login = ({ isConnected  }) => {
       )}
     </>
   );
-};
-
-export const getServerSideProps = async (context) => {
-  const { client } = await connectToDatabase();
-  const isConnected = await client.isConnected(); // Returns true or false
-  return {
-    props: { isConnected },
-  };
 };
 
 export default Login;
