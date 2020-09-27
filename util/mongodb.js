@@ -18,7 +18,7 @@ if (!dbName) {
   );
 }
 
-const connectToDatabase = async () => {
+export const connectToDatabase = async () => {
   if (cachedClient && cachedDb) {
     return { client: cachedClient, db: cachedDb };
   }
@@ -35,5 +35,3 @@ const connectToDatabase = async () => {
 
   return { client, db };
 };
-
-export default connectToDatabase;
