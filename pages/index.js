@@ -33,7 +33,7 @@ const Home = ({ isConnected }) => {
   );
 };
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (context) => {
   const { client } = await connectToDatabase();
   const isConnected = await client.isConnected(); // Returns true or false
   return {

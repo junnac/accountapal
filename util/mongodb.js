@@ -18,7 +18,7 @@ if (!dbName) {
   );
 }
 
-export const connectToDatabase = async (context) => {
+export const connectToDatabase = async () => {
   if (cachedClient && cachedDb) {
     return { client: cachedClient, db: cachedDb };
   }
